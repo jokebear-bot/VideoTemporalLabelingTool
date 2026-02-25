@@ -46,6 +46,19 @@ python src/vtlt/app.py
 - 🏷️ Temporal labeling with start/end frame selection
 - 📊 CSV export for annotations
 - 🖥️ Cross-platform desktop GUI (Windows, macOS, Linux)
+- ⌨️ **Keyboard shortcuts** for efficient navigation (see below)
+
+## Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| `←` (Left Arrow) | Previous frame (-1) |
+| `→` (Right Arrow) | Next frame (+1) |
+| `Shift + ←` | Previous N frames (-FPI) |
+| `Shift + →` | Next N frames (+FPI) |
+| `S` | Select start frame |
+| `E` | Select end frame |
+| `Ctrl + S` | Save label |
 
 ## Project Structure
 

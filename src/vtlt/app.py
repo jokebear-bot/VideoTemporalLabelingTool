@@ -303,6 +303,46 @@ class Layout(wx.Frame):
         self.SetSizer(main_box)
         self.Centre()
 
+        # Setup keyboard shortcuts
+        self._setup_keyboard_shortcuts()
+
+    def _setup_keyboard_shortcuts(self) -> None:
+        """Setup global keyboard shortcuts for frame navigation.
+
+        Shortcuts:
+            Left Arrow:  Previous frame (-1)
+            Right Arrow: Next frame (+1)
+            Shift+Left:  Previous N frames (-FPI)
+            Shift+Right: Next N frames (+FPI)
+            S:           Select start frame
+            E:           Select end frame
+            Ctrl+S:      Save label
+        """
+        # Define accelerator entries
+        accel_entries = [
+            # Frame navigation
+            (wx.ACCEL_NORMAL, wx.WXK_LEFT, 1001),    # Left arrow -> prev frame
+            (wx.ACCEL_NORMAL, wx.WXK_RIGHT, 1002),   # Right arrow -> next frame
+            (wx.ACCEL_SHIFT, wx.WXK_LEFT, 1003),     # Shift+Left -> prev N frames
+            (wx.ACCEL_SHIFT, wx.WXK_RIGHT, 1004),    # Shift+Right -> next N frames
+            # Label operations
+            (wx.ACCEL_NORMAL, ord('S'), 1005),       # S -> select start
+            (wx.ACCEL_NORMAL, ord('E'), 1006),       # E -> select end
+            (wx.ACCEL_CTRL, ord('S'), 1007),         # Ctrl+S -> save
+        ]
+
+        accel_table = wx.AcceleratorTable(accel_entries)
+        self.SetAcceleratorTable(accel_table)
+
+        # Bind accelerator events
+        self.Bind(wx.EVT_MENU, lambda e: self.service.button_event(e, "prevFrame"), id=1001)
+        self.Bind(wx.EVT_MENU, lambda e: self.service.button_event(e, "nextFrame"), id=1002)
+        self.Bind(wx.EVT_MENU, lambda e: self.service.button_event(e, "prevNFrame"), id=1003)
+        self.Bind(wx.EVT_MENU, lambda e: self.service.button_event(e, "nextNFrame"), id=1004)
+        self.Bind(wx.EVT_MENU, lambda e: self.service.button_event(e, "selectStart"), id=1005)
+        self.Bind(wx.EVT_MENU, lambda e: self.service.button_event(e, "selectEnd"), id=1006)
+        self.Bind(wx.EVT_MENU, lambda e: self.service.button_event(e, "saveLabel"), id=1007)
+
     def init_menu(self) -> None:
         """Initialize the menu bar with settings."""
         menu_bar = wx.MenuBar()
